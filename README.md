@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## How to setup and run this code
 1. Get Matterport3D dataset. As described on their website (https://niessner.github.io/Matterport/), Matterport3D dataset requires you to sign an user agreement first, and then email one of the dataset maintainers to get access.
 2. After you get access to Matterport3D dataset, email Yinda Zhang (yindaz (at) gmail (dot) com, https://www.zhangyinda.com, https://github.com/yindaz/DeepCompletionRelease/tree/master/data) to access the Matterport3D reconstructed depth ground truth and Matterport3D reconstructed normals.
@@ -11,4 +10,3 @@
 =======
 # Code
 Code and dataset for InDepth Sensys 2020 submission. 
->>>>>>> parent of 7b49c15 (Update README.md)
