@@ -21,6 +21,10 @@ if __name__ == '__main__':
 
     color_input = torch.randn(1, 3, 256, 320, requires_grad=True)
     depth_input = torch.randn(1, 1, 256, 320, requires_grad=True)
+    
+    color_input = color_input.to(device)
+    depth_input = depth_input.to(device)
+    
     # Export the model
     torch_out = torch.onnx._export(model,             # model being run
                                    (color_input, depth_input),  # model input (or a tuple for multiple inputs)
