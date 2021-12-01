@@ -1,7 +1,6 @@
 ## How to perform inference and performance benchmarks
 To benchmark the latency of our DNN, compile with TensorRT:
-- If using Jetson, make sure Jetson is in the MAXN mode (40W, all cores)
-- sudo ${HOME}/jetson_clocks.sh (set static max performance for CPU, GPU, EMC clocks)
+- If using Jetson, make sure Jetson is in the MAXN mode (40W, all cores) by using sudo ${HOME}/jetson_clocks.sh (set static max performance for CPU, GPU, EMC clocks)
 - cd <InDepth dir>/experiments/
 - python3 export_to_onnx.py 
 - cd ../tmp/
