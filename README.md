@@ -19,7 +19,7 @@ Running the eval_models.py script would give worse than reported latency perform
   - To train the model from scratch, please run `python3 train.py`
 
 ## Code
-Contains the PyTorch code for training and evaluating DNN described in InDepth IMWUT submission. Pretrained weights are also available (see How to setup and run PyTorch DNN training and evaluation code section). There are also some scripts for post-processing the InDepth 18K dataset. 
+Contains the PyTorch code for training and evaluating DNN described in InDepth IMWUT submission. Pretrained weights are also available (see the PyTorch setup section above). There are also some scripts for post-processing the InDepth 18K dataset. 
 
 ## Dataset
 The InDepth 18K dataset described in the paper will be made publically available once the paper is accepted. Meanwhile, here are some sample images from the dataset. 
