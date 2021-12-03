@@ -32,12 +32,12 @@ The image above shows a RGB-D image captured in an indoor lounge. Cooler colors 
 ![2020-11-05T18:49:05107_colorized_projected](https://user-images.githubusercontent.com/85352183/144230596-98814705-c5a0-41d3-b947-e37800801105.png)
 ![2020-11-05T18:49:05107_undistorted](https://user-images.githubusercontent.com/85352183/144230598-418ba9d2-a77c-4121-ac19-2c19bc26fcf4.jpg)
 
-The image above shows a whiteboard on the wall and a chair. Note the right side of the depth image contains artifacts similar to image above.  
+The image above shows a whiteboard on the wall and a chair. Note the right side of the depth image contains artifacts similar to the previous image.  
   
 ![2020-11-06T14:43:4418_colorized_projected](https://user-images.githubusercontent.com/85352183/144230647-43457b3e-42ad-45b5-95d1-e07bb4475224.png)
 ![2020-11-06T14:43:4418_undistorted](https://user-images.githubusercontent.com/85352183/144230648-de66d501-135f-420a-af2d-4f23bafa0f99.jpg)
 
-The image above is taken inside an apartment. Again, there are artifacts on the right side of the depth image. Also note the floor and the desk is missing in the depth image as they are too dark. 
+The image above is taken inside an apartment. Again, there are artifacts on the right side of the depth image. Also note the floor and the desk is missing in the depth image as they are too dark in color. 
 
 ![2020-10-09T12:57:490_colorized_projected](https://user-images.githubusercontent.com/85352183/144230740-27fba7e8-bed2-4644-beda-161b961c0dd9.png)
 ![2020-10-09T12:57:490_undistorted](https://user-images.githubusercontent.com/85352183/144230742-2326797b-7c62-4e91-bfd6-8065dd42711e.jpg)
