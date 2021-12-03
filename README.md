@@ -37,10 +37,10 @@ The image above shows a whiteboard on the wall and a chair. Note the right side 
 ![2020-11-06T14:43:4418_colorized_projected](https://user-images.githubusercontent.com/85352183/144230647-43457b3e-42ad-45b5-95d1-e07bb4475224.png)
 ![2020-11-06T14:43:4418_undistorted](https://user-images.githubusercontent.com/85352183/144230648-de66d501-135f-420a-af2d-4f23bafa0f99.jpg)
 
-The image is taken inside an apartment. Again, there are artifacts on the right side of the depth image. Also note the floor and the desk is missing in the depth as it is too dark. 
+The image above is taken inside an apartment. Again, there are artifacts on the right side of the depth image. Also note the floor and the desk is missing in the depth as it is too dark. 
 
 ![2020-10-09T12:57:490_colorized_projected](https://user-images.githubusercontent.com/85352183/144230740-27fba7e8-bed2-4644-beda-161b961c0dd9.png)
 ![2020-10-09T12:57:490_undistorted](https://user-images.githubusercontent.com/85352183/144230742-2326797b-7c62-4e91-bfd6-8065dd42711e.jpg)
 
-The image is taken in an office. There is no significant depth artifact on this image. However, the depth camera cannot capture surfaces that are too bright or too dark, such as the window, the keyboard, the mouse, and the computer case in the image. 
+The image above is taken in an office. There is no significant depth artifact on this image. However, the depth camera cannot capture surfaces that are too bright or too dark, such as the window, the keyboard, the mouse, and the computer case in the image. 
 
