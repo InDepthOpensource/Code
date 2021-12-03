@@ -19,10 +19,10 @@ Running the eval_models.py script would give worse than reported latency perform
   - To train the model from scratch, please run `python3 train.py`
 
 ## Code
-Contains the PyTorch code for training and evaluating DNN described in InDepth IMWUT submission. Pretrained weights are also available (see the PyTorch setup section above). There are also some scripts for post-processing the InDepth 18K dataset. 
+Contains the PyTorch code for training and evaluating DNN described in InDepth IMWUT submission. Pretrained weights are also available (see the PyTorch setup section above). There are also some scripts for post-processing the ToF18K dataset. 
 
 ## Dataset
-The InDepth 18K dataset described in the paper will be made publically available once the paper is accepted. Meanwhile, here are some sample images from the dataset. 
+The ToF18K dataset contains 18.6 K RGB-D images captured in indoor environments such as apartments, classrooms, meeting halls, office spaces, and university labs. It is captured with the RGB and ToF camera on a Samsung Galaxy Note 10+ phone. The dataset will be made publically available once the paper is accepted. Meanwhile, here are some sample images from the dataset. 
 
 ![2020-11-05T18:40:381366_colorized_projected](https://user-images.githubusercontent.com/85352183/144230500-f1cb1fb4-aff5-498b-be7a-660924d3b67d.png)
 ![2020-11-05T18:40:381366_undistorted](https://user-images.githubusercontent.com/85352183/144230503-b06889b5-4672-456c-b8bd-3d2a19a4c446.jpg)
