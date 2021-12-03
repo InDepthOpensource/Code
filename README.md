@@ -26,17 +26,21 @@ The ToF18K dataset contains 18.6 K RGB-D images captured in indoor environments 
 
 ![2020-11-05T18:40:381366_colorized_projected](https://user-images.githubusercontent.com/85352183/144230500-f1cb1fb4-aff5-498b-be7a-660924d3b67d.png)
 ![2020-11-05T18:40:381366_undistorted](https://user-images.githubusercontent.com/85352183/144230503-b06889b5-4672-456c-b8bd-3d2a19a4c446.jpg)
+
 The image above shows a RGB-D image captured in a university lab. Cooler colors refer to objects and surfaces that are closer and warmer colors refer to surfaces that are further away. There are regions with large depth values on the right side of the image, due to depth camera artifacts mentioned in the paper. Also note the depth values for floors, ceilings, and oblique surfaces are missing as consumer ToF cameras cannot effectively capture surfaces that are parallel to the optical axis of the camera. 
 
 ![2020-11-05T18:49:05107_colorized_projected](https://user-images.githubusercontent.com/85352183/144230596-98814705-c5a0-41d3-b947-e37800801105.png)
 ![2020-11-05T18:49:05107_undistorted](https://user-images.githubusercontent.com/85352183/144230598-418ba9d2-a77c-4121-ac19-2c19bc26fcf4.jpg)
+
 The image above shows a whiteboard on the wall and a chair. Note the right side of the depth image contains artifacts similar to image above.  
   
 ![2020-11-06T14:43:4418_colorized_projected](https://user-images.githubusercontent.com/85352183/144230647-43457b3e-42ad-45b5-95d1-e07bb4475224.png)
 ![2020-11-06T14:43:4418_undistorted](https://user-images.githubusercontent.com/85352183/144230648-de66d501-135f-420a-af2d-4f23bafa0f99.jpg)
+
 The image is taken inside an apartment. Again, there are artifacts on the right side of the depth image. Also note the floor and the desk is missing in the depth as it is too dark. 
 
 ![2020-10-09T12:57:490_colorized_projected](https://user-images.githubusercontent.com/85352183/144230740-27fba7e8-bed2-4644-beda-161b961c0dd9.png)
 ![2020-10-09T12:57:490_undistorted](https://user-images.githubusercontent.com/85352183/144230742-2326797b-7c62-4e91-bfd6-8065dd42711e.jpg)
+
 The image is taken in an office. There is no significant depth artifact on this image. However, the depth camera cannot capture surfaces that are too bright or too dark, such as the window, the keyboard, the mouse, and the computer case in the image. 
 
