@@ -1,3 +1,4 @@
+import io
 import random
 import math
 import torch
@@ -119,7 +120,7 @@ class MatterportTrainDataset(Dataset):
     def __init__(self, file_list_name=MATTERPORT_TRAIN_FILE_LIST_NORMAL, use_generated_mask=True, min_mask=1,
                  max_mask=7, depth_scale_factor=4000.0, random_crop=False, shift_rgb=False, use_normal=False,
                  random_mirror=True, use_samsung_tof_mask=False, random_seed=4935743, gaussian_noise_sigma=0.0,
-                 noise_file_list_name=SAMSUNG_TOF_TRAIN_FILE_LIST):
+                 noise_file_list_name=SAMSUNG_TOF_TRAIN_FILE_LIST, simulate_log_compression=False):
         super().__init__()
 
         self.use_generated_mask = use_generated_mask and (not use_samsung_tof_mask)
@@ -132,6 +133,7 @@ class MatterportTrainDataset(Dataset):
         self.random_mirror = random_mirror
         self.use_samsung_tof_mask = use_samsung_tof_mask
         self.gaussian_noise_sigma = gaussian_noise_sigma
+        self.simulate_log_compression = simulate_log_compression
 
         f = open(file_list_name, 'r')
         self.file_list = [i.split() for i in f.readlines()]
@@ -241,6 +243,12 @@ class MatterportTrainDataset(Dataset):
 
         depth_image = np.array(depth_related_images[0])
 
+        # Intentionally make the input of the network smaller
+        if len(self.file_list[idx]) == 6:
+            depth_scale_factor = self.depth_scale_factor
+        else:
+            depth_scale_factor = 1000.0
+
         if self.gaussian_noise_sigma > 10 ** -6:
             gaussian_noise = np.random.normal(1.0, self.gaussian_noise_sigma, np.array(depth_image).shape)
             depth_image = depth_image * gaussian_noise
@@ -250,17 +258,28 @@ class MatterportTrainDataset(Dataset):
             generated_mask = self.generate_mask(256, 320, self.min_mask, self.max_mask)
             depth_image[generated_mask] = 0.0
 
+        if self.simulate_log_compression:
+            LOG_MAX_DEPTH_CUTOFF = 5.0
+            depth = depth_image / depth_scale_factor
+            log_quant_depth = np.log(2.0 * depth) / np.log(2.0 * LOG_MAX_DEPTH_CUTOFF) * 255
+            log_quant_depth = np.nan_to_num(log_quant_depth)
+            log_quant_depth = np.clip(log_quant_depth, 0, 255).astype(np.uint8)
+            jpg_file = Image.fromarray(log_quant_depth, 'L')
+            buf = io.BytesIO()
+            jpg_file.save(buf, format='JPEG', quality=95)
+            byte_im = buf.getvalue()
+            print('Compressed file size in KB', len(byte_im) // 1024)
+            log_quant_depth = np.array(Image.open(io.BytesIO(byte_im)))
+            log_quant_depth = log_quant_depth / 255.0
+            depth = np.multiply(2 ** (log_quant_depth - 1), 5 ** log_quant_depth)
+            depth_image = depth * depth_scale_factor
+            depth_image = depth_image.astype(np.float32)
+
         depth_image = torch.unsqueeze(torch.from_numpy(depth_image), dim=0)
         rendered_depth_image_and_normals = [torch.unsqueeze(torch.from_numpy(np.array(i)), dim=0) for i in
                                             depth_related_images[1:]]
 
         with torch.no_grad():
-            # Intentionally make the input of the network smaller
-            if len(self.file_list[idx]) == 6:
-                depth_scale_factor = self.depth_scale_factor
-            else:
-                depth_scale_factor = 1000.0
-
             depth_image = depth_image / depth_scale_factor / 16
             rendered_depth_image = rendered_depth_image_and_normals[0] / self.depth_scale_factor
             depth_image[depth_image < NEAR_CLIP / 16.0] = 0.0
@@ -443,10 +462,10 @@ class DepthAdaptationDataset(Dataset):
 
 class MatterportEvalDataset(MatterportTrainDataset):
     def __init__(self, file_list_name=MATTERPORT_TEST_FILE_LIST_NORMAL, use_normal=False,
-                 gaussian_noise_sigma=0.0):
+                 gaussian_noise_sigma=0.0, simulate_log_compression=False):
         super().__init__(file_list_name=file_list_name, random_crop=False, shift_rgb=False,
                          use_normal=use_normal, random_mirror=False, use_generated_mask=False,
-                         gaussian_noise_sigma=gaussian_noise_sigma)
+                         gaussian_noise_sigma=gaussian_noise_sigma, simulate_log_compression=simulate_log_compression)
 
         self.transforms = transforms.Compose((
             transforms.ToTensor(),

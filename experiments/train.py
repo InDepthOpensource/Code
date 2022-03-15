@@ -101,6 +101,7 @@ if __name__ == '__main__':
     parser.add_argument('--shift-rgb', type=bool, default=False)
     parser.add_argument('--test-step', type=int, default=4000)
     parser.add_argument('--train-tof-mask', type=bool, default=False)
+    parser.add_argument('--log-compress', type=bool, default=False)
 
     args = parser.parse_args()
 
@@ -188,6 +189,40 @@ if __name__ == '__main__':
     else:
         raise NotImplemented()
 
+    if args.log_compress:
+        model.unet_block_2.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 32, 3, padding=3, dilation=3, bias=False),
+            nn.BatchNorm2d(32),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+        model.unet_block_2.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 32, 3, padding=6, dilation=6, bias=False),
+            nn.BatchNorm2d(32),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+
+        model.unet_block_4.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 64, 3, padding=3, dilation=3, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+        model.unet_block_4.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 64, 3, padding=6, dilation=6, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+
+        model.unet_block_8.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(384, 64, 3, padding=3, dilation=3, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+        model.unet_block_8.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(384, 64, 3, padding=6, dilation=6, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+
     train_file_list = ''
     test_file_list = ''
 
@@ -223,8 +258,9 @@ if __name__ == '__main__':
                                                min_mask=args.min_mask, max_mask=args.max_mask,
                                                random_crop=args.random_crop,
                                                shift_rgb=args.shift_rgb,
-                                               use_samsung_tof_mask=args.train_tof_mask)
-        eval_dataset = MatterportEvalDataset(file_list_name=test_file_list)
+                                               use_samsung_tof_mask=args.train_tof_mask,
+                                               simulate_log_compression=args.log_compress)
+        eval_dataset = MatterportEvalDataset(file_list_name=test_file_list, simulate_log_compression=args.log_compress)
     else:
         train_dataset = MatterportTrainAddedNoise(file_list_name=MATTERPORT_TRAIN_FILE_LIST_NORMAL,
                                                   use_generated_mask=use_generated_mask,

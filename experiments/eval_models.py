@@ -37,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('--eval-dataset', type=str, default='MatterportEvalDataset')
     parser.add_argument('--bm3d-sigma', type=float, default=0.0)
     parser.add_argument('--gaussian-noise-sigma', type=float, default=0.0)
+    parser.add_argument('--log-compress', type=bool, default=False)
 
     args = parser.parse_args()
 
@@ -114,6 +115,40 @@ if __name__ == '__main__':
     else:
         raise NotImplemented()
 
+    if args.log_compress:
+        model.unet_block_2.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 32, 3, padding=3, dilation=3, bias=False),
+            nn.BatchNorm2d(32),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+        model.unet_block_2.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 32, 3, padding=6, dilation=6, bias=False),
+            nn.BatchNorm2d(32),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+
+        model.unet_block_4.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 64, 3, padding=3, dilation=3, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+        model.unet_block_4.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(192, 64, 3, padding=6, dilation=6, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+
+        model.unet_block_8.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(384, 64, 3, padding=3, dilation=3, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+        model.unet_block_8.fuse_block.conv_layers.append(nn.Sequential(
+            nn.Conv2d(384, 64, 3, padding=6, dilation=6, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True)
+        ))
+
     criterion = BerHuLoss()
     rmse_loss = RMSE()
     l1_loss = L1()
@@ -142,7 +177,7 @@ if __name__ == '__main__':
 
     eval_dataset = None
     if args.eval_dataset == 'MatterportEvalDataset':
-        eval_dataset = MatterportEvalDataset(gaussian_noise_sigma=args.gaussian_noise_sigma)
+        eval_dataset = MatterportEvalDataset(gaussian_noise_sigma=args.gaussian_noise_sigma, simulate_log_compression=args.log_compress)
     elif args.eval_dataset == 'SceneNetRGBDEvalSet':
         eval_dataset = SceneNetRGBDEvalSet()
     elif args.eval_dataset == 'SamsungToFEvalSet':
