@@ -1,3 +1,4 @@
+# DNN Implementation for InDepth: Real-time Depth Inpainting for Mobile Augmented Reality in ACM IMWUT/UbiComp 2022
 ## How to perform inference and performance benchmarks
 To benchmark the latency of our DNN, compile with TensorRT:
 - If using Jetson, make sure Jetson is in the MAXN mode (40W, all cores) by using sudo ${HOME}/jetson_clocks.sh (set static max performance for CPU, GPU, EMC clocks)
@@ -44,3 +45,8 @@ The RGB image and the depth image above are taken inside an apartment. Again, th
 ![2020-10-09T12:57:490_colorized_projected](https://user-images.githubusercontent.com/85352183/144230740-27fba7e8-bed2-4644-beda-161b961c0dd9.png)
 
 The RGB image and the depth image above are taken in an office. There is no significant depth artifact on this image. However, the depth camera cannot capture surfaces that are too bright or too dark, such as the window, the keyboard, the mouse, and the computer case in the image. 
+
+## Citation
+If you found our code, pretrained model, and/or dataset helpful, please cite:
+
+Yunfan Zhang, Tim Scargill, Ashutosh Vaishnav, Gopika Premsankar, Mario Di Francesco, and Maria Gorlatova. 2022. InDepth: Real-time Depth Inpainting for Mobile Augmented Reality. Proc. ACM Interact. Mob. Wearable Ubiquitous Technol. 6, 1, Article 37 (March 2022), 25 pages. https://doi.org/10.1145/3517260
